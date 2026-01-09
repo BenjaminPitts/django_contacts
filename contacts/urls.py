@@ -11,4 +11,6 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('portfolio', views.portfolio, name='portfolio'),
     path('contact', views.contact, name='contact'),
+    path("event/click", views.demo_click, name="demo_click"),
+    path("error", views.force_error, name="force_error")
 ]

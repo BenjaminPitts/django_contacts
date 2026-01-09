@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 
 from .models import Contact
 from .forms import ContactForm
+from django.http import JsonResponse
+from .hg_statsd import counter
+
 
 # import statsd
 # c = statsd.StatsClient("statsd.hostedgraphite.com", 8125, prefix="8770573a-2e24-4ad5-9d1f-f69afca83321")
@@ -62,3 +65,11 @@ def contact_edit(request, pk):
 def contact_delete(request, pk):
     Contact.objects.get(id=pk).delete()
     return redirect('contact_list')
+
+# statsd counter metric
+def demo_click(request):
+    counter("app.events.button_clicks", 1)
+    return JsonResponse({"ok": True, "clicked": True})
+
+def force_error(request):
+    raise Exception("Intentional test error")
